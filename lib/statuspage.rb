@@ -5,8 +5,11 @@ require 'yaml'
 class StatusPage
   attr_accessor :components_hash, :incidents_hash
 
-  def initialize
-    @config = File.expand_path("~/.statuspage.yml")
+  def initialize(opts={})
+    @env = opts['env'] || 'development'
+    config_file=opts['config_file'] || "~/.statuspage.yml"
+    @config = File.expand_path("#{config_file}")
+    puts @config
     @components_hash = {}
     @incidents_hash = {}
 
@@ -15,8 +18,10 @@ class StatusPage
     load_incidents
   end
   
+
+
   def load_config
-    config = YAML.load(File.open @config)
+    config = YAML.load(File.open @config)[@env]
     @oauth = config['oauth']
     @base_url = config['base_url']
     @page = config['page']
