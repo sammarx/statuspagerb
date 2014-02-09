@@ -9,7 +9,6 @@ class StatusPage
     @env = opts['env'] || 'development'
     config_file=opts['config_file'] || "~/.statuspage.yml"
     @config = File.expand_path("#{config_file}")
-    puts @config
     @components_hash = {}
     @incidents_hash = {}
 
